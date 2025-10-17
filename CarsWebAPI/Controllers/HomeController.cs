@@ -28,6 +28,11 @@ namespace CarsWebAPI.Controllers
             return View();
         }
 
+        public ActionResult Create()
+        {
+            return View("CreateCar", new MyCar());
+        }
+
         public ActionResult Edit(string id)
         {
             if (id == null)

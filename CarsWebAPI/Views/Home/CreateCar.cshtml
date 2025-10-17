@@ -1,0 +1,123 @@
+﻿@model CarsWebAPI.Models.MyCar
+
+@{
+    ViewBag.Title = "Create car";
+}
+
+<h2>@Model.Brand @Model.Model</h2>
+
+<form id="validForm" action="" method="post">
+
+    @Html.ValidationSummary(true, "Please fix the following errors!")
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Brand)
+        @Html.TextBoxFor(m => m.Brand, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Brand)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Model)
+        @Html.TextBoxFor(m => m.Model, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Model)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Speed)
+        @Html.TextBoxFor(m => m.Speed, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Speed)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Weight)
+        @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Weight)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Price)
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Price)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Year)
+        @Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Year)
+    </div>
+
+    <button class="btn btn-primary">Create</button>
+    <input class="btn" type="button" value="Cancel" onclick="@("window.location.href='" + @Url.Action("MyCars", "Home") + "'");" />
+
+</form>
+
+<script>
+    function onError(data) {
+        console.log(data);
+        //alert(data);
+
+        // скрыть все ошибки, показанные на предыдущем шаге валидации
+        $("input").removeClass('input-validation-error');
+        $("select").removeClass('input-validation-error');
+        $("span[data-valmsg-for]").removeClass('field-validation-error');
+        $("span[data-valmsg-for]").addClass('field-validation-valid');
+        $("span[data-valmsg-for]").text("");
+
+        // если произошла ошибка валидации
+        if (data.status == 400) {
+            alert("400")
+            console.log(data.responseJSON);
+
+            // перебрать все полученные ошибки валидации
+            //$.each(data.responseJSON.ModelState, function (key, value) {
+            $.each(data.responseJSON.errors, function (key, value) {
+                //key = key.split('.')[1];
+
+                console.log(key);
+                console.log(value);
+
+                // выделить текстовое поле с ошибкой
+                var filter = "input[name='" + key + "']";
+                $(filter).addClass('input-validation-error');
+
+                // показать сообщение об ошибке для каждого текстового поля с ошибкой
+                var validationMessageElement = $('span[data-valmsg-for="' + key + '"]');
+                validationMessageElement.removeClass('field-validation-valid');
+                validationMessageElement.addClass('field-validation-error');
+                validationMessageElement.text(value[0]);
+            });
+        }
+    }
+
+    $('#validForm').submit(function (e) {
+        e.preventDefault();
+
+        var yearValue = parseInt($('#Year').val()) || new Date().getFullYear();
+        var yearAsDate = new Date(yearValue, 0, 1);
+
+        $.ajax({
+            url: '/api/mycars',
+            method: "POST",
+            data: JSON.stringify({
+                Brand: $('#Brand').val(),
+                Model: $('#Model').val(),
+                Speed: parseInt($('#Speed').val()) || 0,
+                Weight: parseInt($('#Weight').val()) || 0,
+                Price: parseFloat($('#Price').val()) || 0,
+                Year: yearAsDate.toISOString(),
+                OwnerId: 1,
+            }),
+            dataType: 'JSON',
+            contentType: 'application/json',
+            cache: false,
+            processData: false,
+            success: function (data) {
+                console.log("Created successfully:", data);
+                document.location.href = "/Home/MyCars";
+                },
+            error: function (data) {
+                onError(data);
+            }
+        });
+    });
+</script>

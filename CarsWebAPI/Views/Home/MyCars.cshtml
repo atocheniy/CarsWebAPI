@@ -22,25 +22,25 @@
 
 <br />
 <input type="button" class="btn btn-primary" id="show" value="Show" />
-
-<div style="display: flex; flex-direction:column; width: 200px">
-    <input type="text" id="brand-input" placeholder="Введите марку" class="form-control" style="display: inline-block; width: auto;" />
-<input type="button" class="btn" id="brand" value="Show by brand" />
-</div>
-
-<div style="display: flex; flex-direction:column; width: 200px">
-    <input type="text" id="model-input" placeholder="Введите модель" class="form-control" style="display: inline-block; width: auto;" />
-<input type="button" class="btn" id="model" value="Show by model" />
-</div>
-
-<div style="display: flex; flex-direction:column; width: 200px">
-<input type="number" id="year-input" placeholder="Введите год" class="form-control" style="display: inline-block; width: auto;" />
-<input type="button" class="btn" id="year" value="Show by year" />
-</div>
-
 <input type="button" class="btn" id="create" value="Create" />
-<input type="button" class="btn" id="update" value="Update" />
-<input type="button" class="btn" id="delete" value="Delete" />
+
+<div style="display: flex; flex-direction:row; gap: 5px; width: 200px; padding-top: 10px">
+    <input type="text" id="brand-input" placeholder="Введите марку" class="form-control" style="display: inline-block; width: auto;" />
+    <input type="button" class="btn" id="brand" value="Show by brand" />
+</div>
+
+<div style="display: flex; flex-direction:row; gap: 5px; width: 200px; padding-top: 10px">
+    <input type="text" id="model-input" placeholder="Введите модель" class="form-control" style="display: inline-block; width: auto;" />
+    <input type="button" class="btn" id="model" value="Show by model" />
+</div>
+
+<div style="display: flex; flex-direction:row; gap: 5px; width: 200px; padding-top: 10px">
+    <input type="number" id="year-input" placeholder="Введите год" class="form-control" style="display: inline-block; width: auto;" />
+    <input type="button" class="btn" id="year" value="Show by year" />
+</div>
+
+<!--<input type="button" class="btn" id="update" value="Update" />-->
+<!--<input type="button" class="btn" id="delete" value="Delete" />-->
 <br />
 
 <script>
@@ -217,4 +217,8 @@
     //alert(button.attr("data-au-id"));
     window.location.href = '/Home/Edit/' + button.attr("data-car-id");
 });
+
+    $('#create').click(function () {
+            window.location.href = '@Url.Action("Create", "Home")';
+    });
 </script>
