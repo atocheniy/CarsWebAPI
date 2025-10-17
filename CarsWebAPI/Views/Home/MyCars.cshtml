@@ -74,7 +74,7 @@
                         "</td><td>" + car.weight +
                         "</td><td>" + car.price +
                         "</td><td>" + year +
-                        "</td><td><button class='btn-link js-edit' data-car-id=" + car.Id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.Id + ">Delete</button></td></tr>");
+                        "</td><td><button class='btn-link js-edit' data-car-id=" + car.id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.id + ">Delete</button></td></tr>");
                 });
             }
         })
@@ -111,7 +111,7 @@
                             "</td><td>" + car.weight +
                             "</td><td>" + car.price +
                             "</td><td>" + year +
-                            "</td><td><button class='btn-link js-edit' data-au-id=" + car.Id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-au-id=" + car.Id + ">Delete</button></td></tr>");
+                                "</td><td><button class='btn-link js-edit' data-car-id=" + car.id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.id + ">Delete</button></td></tr>");
                 });
             }
         })
@@ -147,7 +147,7 @@
                             "</td><td>" + car.weight +
                             "</td><td>" + car.price +
                             "</td><td>" + year +
-                            "</td><td><button class='btn-link js-edit' data-car-id=" + car.Id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.Id + ">Delete</button></td></tr>");
+                            "</td><td><button class='btn-link js-edit' data-car-id=" + car.id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.id + ">Delete</button></td></tr>");
                 });
             }
         })
@@ -183,14 +183,14 @@
                             "</td><td>" + car.weight +
                             "</td><td>" + car.price +
                             "</td><td>" + year +
-                            "</td><td><button class='btn-link js-edit' data-car-id=" + car.Id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.Id + ">Delete</button></td></tr>");
+                            "</td><td><button class='btn-link js-edit' data-car-id=" + car.id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.id + ">Delete</button></td></tr>");
                 });
             }
         })
     });
 
 
-        $("#authorsTable").on("click", ".js-delete", function () {
+        $("#carsTable").on("click", ".js-delete", function () {
         var button = $(this);
 
         //if (confirm("Are you sure you want to delete this author?"))

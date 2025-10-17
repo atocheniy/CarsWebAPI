@@ -97,6 +97,10 @@
         // предовратить отправку формы
         e.preventDefault();
 
+        var dateString = $('#Year').val();
+        var dateParts = dateString.split(' ')[0].split('.');
+        var isoDateString = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
+
         //alert("send");
 
         //var form = $(this);
@@ -109,10 +113,11 @@
                     Id: $('#Id').val(),
                     Brand: $('#Brand').val(),
                     Model: $('#Model').val(),
-                    Speed: $('#Speed').val(),
-                    Weight: $('#Weight').val(),
-                    Price: $('#Price').val(),
-                    Year: $('#Year').val(),
+                    Speed: parseInt($('#Speed').val()) || 0,
+                    Weight: parseInt($('#Weight').val()) || 0,
+                    Price: parseFloat($('#Price').val()) || 0,
+                    Year: new Date(isoDateString).toISOString(),
+                    OwnerId: 0,
                 }),
                 dataType: 'JSON',
                 contentType: 'application/json',

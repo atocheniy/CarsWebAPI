@@ -52,7 +52,14 @@ namespace CarsWebAPI.API
                 return BadRequest();
             }
 
-            _context.Entry(myCar).State = EntityState.Modified;
+            var carToUpdate = await _context.MyCars.FindAsync(id);
+
+            carToUpdate.Brand = myCar.Brand;
+            carToUpdate.Model = myCar.Model;
+            carToUpdate.Speed = myCar.Speed;
+            carToUpdate.Weight = myCar.Weight;
+            carToUpdate.Price = myCar.Price;
+            carToUpdate.Year = myCar.Year;
 
             try
             {
