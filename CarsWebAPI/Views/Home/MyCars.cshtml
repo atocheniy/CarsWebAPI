@@ -1,0 +1,220 @@
+﻿@{
+    ViewData["Title"] = "Cars Page";
+}
+
+<h2>Cars</h2>
+
+<table id="carsTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Speed</th>
+            <th>Weight</th>
+            <th>Price</th>
+            <th>Year</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<br />
+<input type="button" class="btn btn-primary" id="show" value="Show" />
+
+<div style="display: flex; flex-direction:column; width: 200px">
+    <input type="text" id="brand-input" placeholder="Введите марку" class="form-control" style="display: inline-block; width: auto;" />
+<input type="button" class="btn" id="brand" value="Show by brand" />
+</div>
+
+<div style="display: flex; flex-direction:column; width: 200px">
+    <input type="text" id="model-input" placeholder="Введите модель" class="form-control" style="display: inline-block; width: auto;" />
+<input type="button" class="btn" id="model" value="Show by model" />
+</div>
+
+<div style="display: flex; flex-direction:column; width: 200px">
+<input type="number" id="year-input" placeholder="Введите год" class="form-control" style="display: inline-block; width: auto;" />
+<input type="button" class="btn" id="year" value="Show by year" />
+</div>
+
+<input type="button" class="btn" id="create" value="Create" />
+<input type="button" class="btn" id="update" value="Update" />
+<input type="button" class="btn" id="delete" value="Delete" />
+<br />
+
+<script>
+
+    $('#show').click(function (e) {
+
+        // подача Ajax-запроса на сервер при помощи JQuery
+        $.ajax({
+            url: '/api/mycars',
+            method: "GET",
+            dataType: 'JSON',
+            contentType: 'application/json',
+            cache: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+
+                // получить ссылку на таблицу с результатами
+                var table = $('#carsTable');
+
+                // удалить все старые строки
+                table.find("tbody tr").remove();
+
+                // перебрать коллекцию в Json и создать новые строки таблицы на их основе
+                data.forEach(function (car) {
+                    var year = new Date(car.year).getFullYear();
+                    table.append("<tr><td>" + car.id +
+                        "</td><td>" + car.brand + 
+                        "</td><td>" + car.model +
+                        "</td><td>" + car.speed +
+                        "</td><td>" + car.weight +
+                        "</td><td>" + car.price +
+                        "</td><td>" + year +
+                        "</td><td><button class='btn-link js-edit' data-car-id=" + car.Id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.Id + ">Delete</button></td></tr>");
+                });
+            }
+        })
+    });
+
+    $('#brand').click(function (e) {
+    //alert('state');
+    var brandToSearch = $('#brand-input').val();
+
+        // подача Ajax-запроса на сервер при помощи JQuery
+        $.ajax({
+            url: '/api/mycars/brand/' + brandToSearch,
+            method: "GET",
+            dataType: 'JSON',
+            contentType: 'application/json',
+            cache: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+
+                // получить ссылку на таблицу с результатами
+                var table = $('#carsTable');
+
+                // удалить все старые строки
+                table.find("tbody tr").remove();
+
+                // перебрать коллекцию в Json и создать новые строки таблицы на их основе
+                data.forEach(function (car) {
+                    var year = new Date(car.year).getFullYear();
+                        table.append("<tr><td>" + car.id +
+                            "</td><td>" + car.brand +
+                            "</td><td>" + car.model +
+                            "</td><td>" + car.speed +
+                            "</td><td>" + car.weight +
+                            "</td><td>" + car.price +
+                            "</td><td>" + year +
+                            "</td><td><button class='btn-link js-edit' data-au-id=" + car.Id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-au-id=" + car.Id + ">Delete</button></td></tr>");
+                });
+            }
+        })
+    });
+
+        $('#model').click(function (e) {
+            var modelToSearch = $('#model-input').val();
+
+        // подача Ajax-запроса на сервер при помощи JQuery
+        $.ajax({
+            url: '/api/mycars/model/' + modelToSearch,
+            method: "GET",
+            dataType: 'JSON',
+            contentType: 'application/json',
+            cache: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+
+                // получить ссылку на таблицу с результатами
+                var table = $('#carsTable');
+
+                // удалить все старые строки
+                table.find("tbody tr").remove();
+
+                // перебрать коллекцию в Json и создать новые строки таблицы на их основе
+                 data.forEach(function (car) {
+                    var year = new Date(car.year).getFullYear();
+                        table.append("<tr><td>" + car.id +
+                            "</td><td>" + car.brand +
+                            "</td><td>" + car.model +
+                            "</td><td>" + car.speed +
+                            "</td><td>" + car.weight +
+                            "</td><td>" + car.price +
+                            "</td><td>" + year +
+                            "</td><td><button class='btn-link js-edit' data-car-id=" + car.Id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.Id + ">Delete</button></td></tr>");
+                });
+            }
+        })
+    });
+
+    $('#year').click(function (e) {
+        var yearToSearch = $('#year-input').val();
+
+        // подача Ajax-запроса на сервер при помощи JQuery
+        $.ajax({
+            url: '/api/mycars/year/' + yearToSearch,
+            method: "GET",
+            dataType: 'JSON',
+            contentType: 'application/json',
+            cache: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+
+                // получить ссылку на таблицу с результатами
+                var table = $('#carsTable');
+
+                // удалить все старые строки
+                table.find("tbody tr").remove();
+
+                // перебрать коллекцию в Json и создать новые строки таблицы на их основе
+                 data.forEach(function (car) {
+                    var year = new Date(car.year).getFullYear();
+                        table.append("<tr><td>" + car.id +
+                            "</td><td>" + car.brand +
+                            "</td><td>" + car.model +
+                            "</td><td>" + car.speed +
+                            "</td><td>" + car.weight +
+                            "</td><td>" + car.price +
+                            "</td><td>" + year +
+                            "</td><td><button class='btn-link js-edit' data-car-id=" + car.Id + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-car-id=" + car.Id + ">Delete</button></td></tr>");
+                });
+            }
+        })
+    });
+
+
+        $("#authorsTable").on("click", ".js-delete", function () {
+        var button = $(this);
+
+        //if (confirm("Are you sure you want to delete this author?"))
+        {
+            $.ajax({
+                url: "/api/mycars/" + button.attr("data-car-id"),
+                method: "DELETE",
+                success: function () {
+
+                    // получить по кнопке удаляемой строки саму удаляемую строку
+                    var row = button[0].parentNode.parentNode;
+
+                    // удалить строку из таблицы
+                    row.parentNode.removeChild(row);
+                }
+            }).fail(function () {
+                alert('fail');
+            })
+        }
+    });
+
+    $("#carsTable").on("click", ".js-edit", function () {
+    var button = $(this);
+    //alert(button.attr("data-au-id"));
+    window.location.href = '/Home/Edit/' + button.attr("data-car-id");
+});
+</script>
